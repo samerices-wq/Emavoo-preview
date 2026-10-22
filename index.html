@@ -21,7 +21,7 @@ header.brand{text-align:center;padding-top:10px}.giant{position:relative;margin:
 .pill{font-size:.8rem;color:var(--p3);border:1px solid #1d3a52;border-radius:999px;padding:4px 12px;background:rgba(1,149,255,.08)}
 .hero{padding:clamp(40px,8vw,90px) 0 32px;max-width:820px}
 .type{font-size:clamp(2.1rem,6vw,3.9rem);line-height:1.08;margin:0 0 18px;letter-spacing:-.03em;font-weight:800}
-.type .rb{display:inline;transition:opacity .25s;background:linear-gradient(90deg,var(--p5),var(--p3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.type{position:relative}.type .rb{display:inline;transition:opacity .25s;background:linear-gradient(90deg,var(--p5),var(--p3));-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{font-size:clamp(1.05rem,2.2vw,1.25rem);color:var(--mut);margin:0 0 28px}
 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--p5);color:#fff;font-weight:700;text-decoration:none;padding:13px 22px;border-radius:12px;border:0;font:inherit;cursor:pointer}
 .btn:hover{background:#2aa5ff}.btn.ghost{background:transparent;border:1px solid #2a4a63;color:var(--tx)}
@@ -31,11 +31,13 @@ header.brand{text-align:center;padding-top:10px}.giant{position:relative;margin:
 .tech{margin:26px 0 40px;border:1px solid var(--line);border-radius:14px;background:rgba(8,14,19,.85);display:flex;align-items:center;gap:12px;padding:12px 16px;font-family:ui-monospace,Menlo,Consolas,monospace;position:relative;overflow:hidden}
 .tech::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(92,187,255,.05) 0 1px,transparent 1px 3px)}
 .pr{color:#3ddc97;font-size:.85rem;white-space:nowrap}
-.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex:1}
-@media(max-width:640px){.slots{grid-template-columns:repeat(2,1fr)}.pr{display:none}.slots:not([style]) .ti:nth-child(n+3){display:none}}
-.ti{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#0f161c;border:1px solid var(--line);color:var(--mut);font-size:.82rem;white-space:nowrap;overflow:hidden}
+.slots{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;flex:1;height:44px}
+@media(max-width:640px){.slots{grid-template-columns:repeat(5,1fr)}.pr{display:none}}
+.ti{display:flex;align-items:center;justify-content:center;height:44px;border-radius:10px;background:#0f161c;border:1px solid var(--line);overflow:hidden}.ti svg{transition:none}
 .ti svg{width:22px;height:22px;flex:none;stroke:var(--p3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ti.in{animation:gin .6s steps(6) both}.ti.out{animation:gout .35s steps(4) both}
+.ti.in svg{animation:bin .6s steps(1) both}.ti.out svg{animation:bout .4s steps(1) both}
+@keyframes bin{0%{opacity:0}15%{opacity:1}30%{opacity:0}45%{opacity:1}60%{opacity:.2}75%{opacity:1;filter:drop-shadow(0 0 6px #5cbbff)}100%{opacity:1;filter:none}}
+@keyframes bout{0%{opacity:1}25%{opacity:0}50%{opacity:1}75%,100%{opacity:0}}
 @keyframes gin{0%{opacity:0;clip-path:inset(0 0 100% 0);filter:blur(3px) contrast(3);transform:translateX(-4px)}30%{opacity:1;clip-path:inset(40% 0 30% 0);transform:translateX(3px);text-shadow:2px 0 #ff3b6b,-2px 0 #0195ff}60%{clip-path:inset(0 0 50% 0);transform:translateX(-2px);filter:blur(1px)}100%{clip-path:inset(0);transform:none;filter:none;text-shadow:none}}
 @keyframes gout{0%{opacity:1}50%{clip-path:inset(30% 0 40% 0);transform:translateX(4px);filter:contrast(3)}100%{opacity:0;clip-path:inset(50% 0 50% 0)}}
 .cur{display:inline-block;width:.5em;height:1em;background:var(--p3);vertical-align:-.1em;margin-left:4px;animation:blink 1s steps(1) infinite}
@@ -69,6 +71,14 @@ footer{color:var(--mut);font-size:.85rem;border-top:1px solid var(--line);paddin
 .pf{height:100%;width:0;background:linear-gradient(90deg,var(--p5),var(--p3));transition:width 2.2s ease-out}
 .pf.pulse{animation:pp 1.4s ease-in-out infinite}@keyframes pp{50%{opacity:.55}}
 .tmsg{font-family:Manrope,system-ui,sans-serif;color:var(--tx);margin:12px 16px 16px;font-size:1rem}
+
+/* contenedor compartido v4 */
+:root{--box:1080px}
+.tech,.term,#juego{width:100%;max-width:var(--box);margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
+.gwrap{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+@media(max-width:760px){.gwrap{grid-template-columns:minmax(0,1fr)}}
+#board{width:100%;max-width:100%;height:auto}
+.gwrap>div{min-width:0}#log li{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -115,12 +125,11 @@ const I={
 "Terminal":'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/>',
 "Engranaje":'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
 "Seguridad":'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4M12 15v2"/>'};
-const tr=document.getElementById('track'),K=Object.keys(I),ic=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg><span>${k}</span>`;
-const nS=()=>matchMedia('(max-width:640px)').matches?2:4;let cur=K.slice(0,nS()),nx=cur.length,sl=0;
-tr.innerHTML=cur.map(k=>`<div class="ti">${ic(k)}</div>`).join('');
-if(RM){tr.innerHTML=K.map(k=>`<div class="ti">${ic(k)}</div>`).join('');tr.style.gridTemplateColumns='repeat(auto-fit,minmax(130px,1fr))'}
-else setInterval(()=>{const n=nS(),el=tr.children[sl%n];if(!el)return;el.className='ti out';setTimeout(()=>{while(cur.includes(K[nx%K.length]))nx++;cur[sl%n]=K[nx%K.length];el.innerHTML=ic(K[nx++%K.length]);el.className='ti in'},350);sl++},1400);
-for(let k=0;k<4;k++)tr.children[k]&&(tr.children[k].style.display='');
+const tr=document.getElementById('track'),K=Object.keys(I),ic=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
+const nS=()=>matchMedia('(max-width:640px)').matches?5:8;let cur=K.slice(0,nS()),nx=cur.length,sl=0;
+tr.innerHTML=Array.from({length:8},(_,j)=>`<div class="ti" title="${K[j]}">${ic(K[j])}</div>`).join('');const fit=()=>{const n=nS();[...tr.children].forEach((c,j)=>c.style.display=j<n?'':'none')};fit();addEventListener('resize',fit);
+cur=K.slice(0,8);nx=8;
+if(!RM)setInterval(()=>{const n=nS(),j=Math.floor(Math.random()*n),el=tr.children[j];el.className='ti out';setTimeout(()=>{while(cur.includes(K[nx%K.length]))nx++;const k=K[nx++%K.length];cur[j]=k;el.title=k;el.innerHTML=ic(k);el.className='ti in'},400)},900);
 // terminal de estado
 (function(){const L=[['cmd','$ emavoo deploy --sitio'],['ok','✓ diseño listo'],['ok','✓ servidores conectados'],['ld','⟳ cargando servicios… 80%']],el=document.getElementById('tlog'),pf=document.getElementById('pf');
 const line=(c,t)=>{const s=document.createElement('span');s.className=c;s.textContent=t;el.append(s,'\n');return s};
@@ -129,6 +138,7 @@ let i=0;const go=()=>{if(i>=L.length){pf.style.width='80%';setTimeout(()=>pf.cla
 new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){o.disconnect();go()}}).observe(el)})();
 // título tipeado
 const tw0=document.getElementById('tw'),tw={set textContent(t){tw0.innerHTML='';tw0.append(t.slice(0,B.length));if(t.length>B.length){const r=document.createElement('span');r.className='rb';r.textContent=t.slice(B.length);tw0.append(r)}}},B="Conectando ideas para ",F=["mejorar procesos","crear soluciones","automatizar tareas","impulsar tu negocio","transformar tu trabajo con IA"];
+(function(){const h=document.querySelector('.type');const fix=()=>{const c=h.cloneNode(false);c.removeAttribute('id');c.style.cssText='position:absolute;visibility:hidden;left:0;top:0;min-height:0;width:'+h.clientWidth+'px';c.setAttribute('aria-hidden','true');document.body.append(c);let m=0;F.forEach(f=>{c.innerHTML='<span>'+B+'<span class="rb">'+f+'</span><i class="cur"></i></span>';m=Math.max(m,c.getBoundingClientRect().height)});c.remove();h.style.minHeight=Math.ceil(m)+'px'};fix();addEventListener('resize',fix);document.fonts&&document.fonts.ready.then(fix)})();
 if(RM)tw.textContent=B+F[0];else{let fi=0,n=0,st=0;(function step(){const full=B+F[fi];let d=70;
 if(st==0){tw.textContent=full.slice(0,++n);if(n>=full.length){st=1;d=1800}}
 else{tw.textContent=full.slice(0,--n);d=35;if(n<=B.length){st=0;fi=(fi+1)%F.length;d=300}}
