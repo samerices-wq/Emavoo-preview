@@ -80,6 +80,8 @@ footer{color:var(--mut);font-size:.85rem;border-top:1px solid var(--line);paddin
 #board{width:100%;max-width:100%;height:auto}
 .gwrap>div{min-width:0}#log li{overflow-wrap:anywhere}
 .giant .bn{padding:0 .1em 0 .05em;font-weight:800}
+.giant .bs{grid-area:2/1;align-self:start;transform:none;background:none;border:0;padding:.5em 0 0;border-radius:0;backdrop-filter:none;box-shadow:none;color:#fff}
+.tech>.cur{animation:none}
 </style>
 </head>
 <body>
@@ -129,8 +131,7 @@ const I={
 const tr=document.getElementById('track'),K=Object.keys(I),ic=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
 const nS=()=>matchMedia('(max-width:640px)').matches?5:8;let cur=K.slice(0,nS()),nx=cur.length,sl=0;
 tr.innerHTML=Array.from({length:8},(_,j)=>`<div class="ti" title="${K[j]}">${ic(K[j])}</div>`).join('');const fit=()=>{const n=nS();[...tr.children].forEach((c,j)=>c.style.display=j<n?'':'none')};fit();addEventListener('resize',fit);
-cur=K.slice(0,8);nx=8;
-if(!RM)setInterval(()=>{const n=nS(),j=Math.floor(Math.random()*n),el=tr.children[j];el.className='ti out';setTimeout(()=>{while(cur.includes(K[nx%K.length]))nx++;const k=K[nx++%K.length];cur[j]=k;el.title=k;el.innerHTML=ic(k);el.className='ti in'},400)},900);
+/* barra estática v6 */
 // terminal de estado
 (function(){const L=[['cmd','$ emavoo deploy --sitio'],['ok','✓ diseño listo'],['ok','✓ servidores conectados'],['ld','⟳ cargando servicios… 80%']],el=document.getElementById('tlog'),pf=document.getElementById('pf');
 const line=(c,t)=>{const s=document.createElement('span');s.className=c;s.textContent=t;el.append(s,'\n');return s};
