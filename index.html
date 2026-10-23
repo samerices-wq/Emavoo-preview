@@ -97,7 +97,7 @@ footer{color:var(--mut);font-size:.85rem;border-top:1px solid var(--line);paddin
 .tech>.cur{animation:none}
 .type{display:grid;align-items:start}.type>.tg,.type>.tv{grid-area:1/1}.type>.tg{visibility:hidden}.type>.tg .cur{animation:none}
 .tbody{height:calc(4 * 1.7em + 20px);min-height:0;overflow:hidden}.term,.term *{transition-property:opacity,width,background-color,box-shadow,filter}
-header.brand .chip{display:block;width:clamp(64px,10vw,112px);height:auto;aspect-ratio:1;margin:0 auto clamp(6px,1.5vw,14px)}
+
 .ti{transition:box-shadow .18s,filter .18s,transform .18s;cursor:default}
 .ti:hover,.ti.on{box-shadow:0 0 0 1px #4495d0,0 0 14px rgba(68,149,208,.75),0 0 28px rgba(156,199,230,.35);filter:brightness(1.35);transform:scale(1.06)}
 .ti:hover svg,.ti.on svg{filter:drop-shadow(0 0 6px #9cc7e6)}
@@ -111,6 +111,27 @@ h1,h2,.giant .bs,.xbn{font-family:Sora,Manrope,system-ui,sans-serif;font-weight:
 footer a.mail{color:var(--mut);text-decoration:none;border-bottom:1px dotted #3a5164}footer a.mail:hover,footer a.mail:focus-visible{color:var(--p3)}
 .snd{position:fixed;right:14px;bottom:14px;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid #2a4a63;background:rgba(14,17,20,.8);color:var(--p3);display:grid;place-items:center;cursor:pointer;padding:0;opacity:.75;transition:opacity .2s,box-shadow .2s}
 .snd:hover,.snd:focus-visible{opacity:1;box-shadow:0 0 12px rgba(68,149,208,.55)}.snd svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.snd .x{display:none}.snd[aria-pressed="true"] .w{display:none}.snd[aria-pressed="true"] .x{display:inline}
+.chipb{display:block;margin:0 auto clamp(6px,1.5vw,14px);padding:0;border:0;background:none;cursor:pointer;width:clamp(64px,10vw,112px);aspect-ratio:1;border-radius:22%;-webkit-tap-highlight-color:transparent}
+.chipb .chip{display:block;width:100%;height:100%;margin:0;overflow:visible}
+.chip .pin{animation:pinOn .35s calc(.12s + var(--i)*.07s) steps(2) both}
+@keyframes pinOn{0%{opacity:.08}50%{opacity:1;stroke:#9cc7e6}100%{opacity:1}}
+.chip .draw{stroke-dasharray:100;stroke-dashoffset:0;animation:drawE 1s 1s ease-out both}.chip .d2{animation-delay:1.7s;animation-duration:.5s}
+@keyframes drawE{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.chip .cglow{opacity:.55;animation:fadeIn .8s 1.9s both}@keyframes fadeIn{from{opacity:0}}
+.chip .node{transform-box:fill-box;transform-origin:center;animation:fadeIn .3s 2.1s both,nodeP 3.5s 2.6s ease-in-out infinite}
+@keyframes nodeP{0%,70%,100%{transform:scale(1);filter:none}80%{transform:scale(1.25);filter:drop-shadow(0 0 14px #f5c26b)}}
+.chip .burst{opacity:0;transform-box:fill-box;transform-origin:center}
+.chip .zap{stroke-dasharray:14 86;stroke-dashoffset:114;opacity:0}
+.chip .spk{opacity:0;transform-box:fill-box;transform-origin:center}
+.chipb.fx .zap{animation:zap .55s ease-in both}@keyframes zap{0%{opacity:1;stroke-dashoffset:114}90%{opacity:1}100%{opacity:0;stroke-dashoffset:14}}
+.chipb.fx .pin{animation:pinFx .5s calc(var(--i)*.04s) steps(2) both}@keyframes pinFx{50%{stroke:#f2f6fa;filter:drop-shadow(0 0 8px #4495d0)}}
+.chipb.fx .burst{animation:burst .7s .4s ease-out both}@keyframes burst{0%{opacity:0;transform:scale(.5)}30%{opacity:.6}100%{opacity:0;transform:scale(1.15)}}
+.chipb.fx .spk{animation:spk .6s .5s ease-out both}@keyframes spk{0%{opacity:1;transform:rotate(var(--a)) translateX(0)}100%{opacity:0;transform:rotate(var(--a)) translateX(70px) scale(.3)}}
+.chipb.fx .node{animation:nodeHit .5s .45s ease-out both}@keyframes nodeHit{40%{transform:scale(1.45);filter:drop-shadow(0 0 18px #f5c26b)}}
+.chipb.oc .chip{animation:oc .25s steps(2) 8}@keyframes oc{50%{filter:drop-shadow(0 0 16px #4495d0) brightness(1.4)}}
+.octoast{position:fixed;left:50%;top:18px;z-index:30;transform:translate(-50%,-12px);opacity:0;pointer-events:none;background:rgba(14,17,20,.92);border:1px solid #3376a9;color:#f2f6fa;font:700 .95rem Sora,Manrope,sans-serif;padding:8px 16px;border-radius:999px;box-shadow:0 0 22px rgba(68,149,208,.55);transition:opacity .25s,transform .25s}
+.octoast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.chip .cglow{opacity:.55}.chip .node{filter:drop-shadow(0 0 8px #f5c26b)}}
 </style>
 </head>
 <body>
@@ -118,7 +139,15 @@ footer a.mail{color:var(--mut);text-decoration:none;border-bottom:1px dotted #3a
 <a class="skip" href="#contenido">Saltar al contenido</a>
 <canvas id="net" aria-hidden="true"></canvas><div class="glow" aria-hidden="true"></div>
 <main id="contenido">
-<header class="brand"><img class="chip" src="marca/emavoo-icono-oscuro.svg" width="512" height="512" alt="" aria-hidden="true"><h1 class="giant" aria-label="emavoo Soluciones Digitales"><span class="bn" aria-hidden="true">emav<span class="oo">oo</span></span><span class="bs" aria-hidden="true">Soluciones Digitales</span></h1></header>
+<header class="brand"><button class="chipb" id="chipb" type="button" aria-label="Chip Emavoo"><svg class="chip" viewBox="0 0 512 512" width="512" height="512" aria-hidden="true" focusable="false"><defs><filter id="cgw" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+<rect width="512" height="512" rx="96" fill="#0e1114"/><circle class="burst" cx="256" cy="256" r="200" fill="#4495d0" filter="url(#cgw)"/>
+<g fill="none" stroke="#3376a9" stroke-width="20" stroke-linecap="round"><path class="pin" style="--i:0" d="M191,126 V92"/><path class="pin" style="--i:1" d="M256,126 V92"/><path class="pin" style="--i:2" d="M321,126 V92"/><path class="pin" style="--i:3" d="M386,191 H420"/><path class="pin" style="--i:4" d="M386,321 H420"/><path class="pin" style="--i:5" d="M256,386 V420"/><path class="pin" style="--i:6" d="M191,386 V420"/><path class="pin" style="--i:7" d="M126,321 H92"/><path class="pin" style="--i:8" d="M126,256 H92"/><path class="pin" style="--i:9" d="M126,191 H92"/></g>
+<rect x="126" y="126" width="260" height="260" rx="50" fill="none" stroke="#3376a9" stroke-width="26"/>
+<g class="trz" fill="none" stroke="#9cc7e6" stroke-linecap="round" stroke-linejoin="round"><path class="draw" pathLength="100" d="M186,256 H326 A70,70 0 1 0 309.6,301.0" stroke-width="28"/><path class="draw d2" pathLength="100" d="M326,256 H446" stroke-width="18"/><path class="draw d2" pathLength="100" d="M309.6,301.0 L321.0,312.4 V450" stroke-width="18"/></g>
+<g class="cglow" filter="url(#cgw)"><path d="M186,256 H326 A70,70 0 1 0 309.6,301.0" fill="none" stroke="#4495d0" stroke-width="30"/><path d="M326,256 H446 M321,312 V450" stroke="#4495d0" stroke-width="20" fill="none"/></g>
+<path class="zap" pathLength="100" d="M309.6,301 A70,70 0 1 1 326,256 H446" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+<g fill="#f5c26b"><circle class="spk" style="--a:-60deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:-30deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:0deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:30deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:60deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:90deg" cx="446" cy="256" r="7"/><circle class="spk" style="--a:-90deg" cx="446" cy="256" r="7"/></g>
+<circle class="node" cx="446" cy="256" r="27" fill="#f5c26b"/><circle cx="321" cy="450" r="22" fill="#fff"/></svg></button><h1 class="giant" aria-label="emavoo Soluciones Digitales"><span class="bn" aria-hidden="true">emav<span class="oo">oo</span></span><span class="bs" aria-hidden="true">Soluciones Digitales</span></h1></header>
 <div class="tech" role="region" aria-label="Tecnologías con las que trabajamos"><span class="pr" aria-hidden="true">emavoo@ia:~$</span><div class="slots" id="track"></div><i class="cur" aria-hidden="true"></i></div>
 <section class="hero">
 <h2 class="type"><span class="sr" id="rotsr">Conectando ideas para mejorar procesos, crear soluciones, automatizar tareas, impulsar tu negocio y transformar tu trabajo con IA.</span><span class="tg" aria-hidden="true">Conectando ideas para <span class="rb">mejorar procesos</span><i class="cur"></i></span><span class="tg" aria-hidden="true">Conectando ideas para <span class="rb">crear soluciones</span><i class="cur"></i></span><span class="tg" aria-hidden="true">Conectando ideas para <span class="rb">automatizar tareas</span><i class="cur"></i></span><span class="tg" aria-hidden="true">Conectando ideas para <span class="rb">impulsar tu negocio</span><i class="cur"></i></span><span class="tg" aria-hidden="true">Conectando ideas para <span class="rb">transformar tu trabajo con IA</span><i class="cur"></i></span><span class="tv" aria-hidden="true"><span id="tw"></span><i class="cur"></i></span></h2>
@@ -143,6 +172,7 @@ footer a.mail{color:var(--mut);text-decoration:none;border-bottom:1px dotted #3a
 </section>
 <footer><p><span data-campo="direccion">Av. Apoquindo 6410, of. 605, piso 6, Las Condes, Santiago</span></p><p><a class="mail" href="mailto:hola@emavoo.cl">hola@emavoo.cl</a></p><p>© 2026 Emavoo Soluciones Digitales SpA</p></footer>
 </main>
+<div class="octoast" id="octoast" role="status" aria-live="polite"></div>
 <script>
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 // íconos SVG propios
@@ -184,10 +214,10 @@ addEventListener('resize',rs);
 addEventListener('pointermove',e=>{M.x=e.clientX;M.y=e.clientY},{passive:true});
 addEventListener('touchstart',e=>{M.x=e.touches[0].clientX;M.y=e.touches[0].clientY},{passive:true});
 addEventListener('pointerleave',()=>{M.x=M.y=-999});
-function draw(){cx.clearRect(0,0,W,H);for(const p of N){if(!RM){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;const dx=p.x-M.x,dy=p.y-M.y,d=Math.hypot(dx,dy);if(d<140&&d>0){p.x+=dx/d*1.2;p.y+=dy/d*1.2}}}
+function draw(){cx.clearRect(0,0,W,H);const OC=performance.now()<(window.__ocT||0);for(const p of N){if(OC){p.x+=(window.__ocX-p.x)*.035;p.y+=(window.__ocY-p.y)*.035}if(!RM){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;const dx=p.x-M.x,dy=p.y-M.y,d=Math.hypot(dx,dy);if(d<140&&d>0){p.x+=dx/d*1.2;p.y+=dy/d*1.2}}}
 for(let i=0;i<N.length;i++){const a=N[i];for(let j=i+1;j<N.length;j++){const b=N[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<130){cx.strokeStyle=`rgba(65,142,198,${(1-d/130)*.28})`;cx.lineWidth=1;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}}
 const dm=Math.hypot(a.x-M.x,a.y-M.y);if(dm<200){cx.strokeStyle=`rgba(65,142,198,${(1-dm/200)*.6})`;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(M.x,M.y);cx.stroke()}
-cx.fillStyle=dm<200?'#9cc7e6':'rgba(156,199,230,.55)';cx.beginPath();cx.arc(a.x,a.y,dm<200?2.6:1.8,0,7);cx.fill()}
+cx.fillStyle=OC&&Math.random()<.5?'#f5c26b':dm<200?'#9cc7e6':'rgba(156,199,230,.55)';cx.beginPath();cx.arc(a.x,a.y,dm<200?2.6:1.8,0,7);cx.fill()}
 if(!RM)requestAnimationFrame(draw)}
 rs();if(!RM)draw();
 // juego: rompe las tareas (breakout)
@@ -238,6 +268,17 @@ const P=[523,587,659,698,784,880,988,1047];
 el.addEventListener('pointerdown',()=>{el.classList.add('on');__blip(P[i%8]);setTimeout(()=>el.classList.remove('on'),450)})});
 const tm=document.querySelector('.term');let tl=0;tm.addEventListener('pointerenter',e=>{const n=performance.now();if(n-tl>800){tl=n;__blip(440)}});
 tm.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){tm.classList.add('on');setTimeout(()=>tm.classList.remove('on'),700)}});
+})();
+
+// chip interactivo
+(function(){const b=document.getElementById('chipb'),t=document.getElementById('octoast');if(!b)return;let clicks=[],busy=0,tt;
+const fire=()=>{if(RM)return;const n=performance.now();if(n-busy<700)return;busy=n;b.classList.remove('fx');void b.offsetWidth;b.classList.add('fx');
+[523,659,784,1046].forEach((f,i)=>setTimeout(()=>window.__blip&&__blip(f),i*100));setTimeout(()=>b.classList.remove('fx'),1300)};
+b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')fire()});
+b.addEventListener('click',()=>{fire();const n=performance.now();clicks=clicks.filter(c=>n-c<1500);clicks.push(n);if(clicks.length>=5){clicks=[];oc()}});
+function oc(){const r=b.getBoundingClientRect();window.__ocX=r.left+r.width/2;window.__ocY=r.top+r.height/2;window.__ocT=performance.now()+2000;
+b.classList.remove('oc');void b.offsetWidth;b.classList.add('oc');t.textContent='Modo IA activado ⚡';t.classList.add('on');[784,988,1175,1568].forEach((f,i)=>setTimeout(()=>window.__blip&&__blip(f),400+i*110));
+clearTimeout(tt);tt=setTimeout(()=>{t.classList.remove('on');b.classList.remove('oc')},2200)}
 })();
 </script>
 </body>
